@@ -1,0 +1,92 @@
+{{!--  
+<div class="container">
+  <form action="/users/control" name="formulario" id="formulario" method="GET"> 
+Un boton: <input type="button" name="Boton1" value="1" OnClick="Mostrar(this);"><br><br> 
+Un boton: <input type="button" name="Boton2" value="2" OnClick="Mostrar(this);"><br><br> 
+Un boton: <input type="button" name="Boton3" value="3" OnClick="Mostrar(this);"><br> 
+</form> 
+</div>  --}}
+<nav class="navbar navbar-dark bg-dark ">
+  <form class="form-inline">
+    <a href="/senso" class="btn btn-outline-success" type="button">Monitorizar Sensores</a>
+    <a href="/active" class="btn btn-outline-success" type="button"> Control Manual</a>
+    <a href="/notes" class="btn btn-outline-success" type="button"> HORARIOs DE RIEGO</a>
+  </form><i class="display-4  alert-success bg-dark fab fa-node"></i>
+</nav>
+<br>
+<div class="card " style="width: 37rem;">
+  <h5 class="card-header">BOMBA 1</h5>
+  <div class="card-body">
+    <table border="0" withd="10%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="3" style="width: 16rem;">
+          <p class="card-text btn btn-outline-dark" id="BTmotor"><i
+              class="alert-primary mx-auto display-4 fab fa-jedi-order"></i>BOMBA <i
+              class=" display-4 fas fa-angle-double-right"></i> </p>
+        </td>
+        <td class="mx-auto" style="width: 9rem;">
+          <h3 class="">ESTADO</h3>
+        </td>
+        <td class="mx-auto" style="width: 14rem;">
+          <h3>FLUJO</h3>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="row"><a id="estado">ii</p>
+        </td>
+        <td>
+          <p class="row"><a id="flujo">iii</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+
+
+{{!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> --}}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/f154b433aa.js"></script>
+<script src="index.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+  var socket = io();
+  var estado = 0;
+  window.onload = function () {
+    document.getElementById("BTmotor").onclick = function motorActAp() {
+//      estado++;
+estado+=1;
+      socket.emit('motor', estado)
+      let estadom = document.getElementById("BTmotor");
+      if (estado % 2) {
+        estadom.innerHTML = `<i class=" display-4  mx-auto text-success alert alert-success fas fa-power-off"></i>`;
+      } else {
+        estadom.innerHTML =
+          `<i class="  display-4 alert alert-danger fas fa-power-off mx-auto"></i>`;
+      }
+    }
+  }
+  document.getElementById('BTmotor').onclick = motorActAp;
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script >
+
+  var socket1 = io();
+  socket1.on('fluj', function (datoflu) {
+    let flujo1 = document.getElementById("flujo");
+    let estado = document.getElementById("estado");
+    //temp.innerHTML=`${data}°C`
+    if (datoflu == 1) {
+      flujo1.innerHTML = `<h3>Hay Flujo<i class=" bg-white alert alert-primary  fas fa-tint"></i></h3>`;
+      estado.innerHTML = `<h4 class="text-success">encendido</h4>`;
+    }
+    if (datoflu == 0) {
+      flujo1.innerHTML = `<h3>No hay Flujo<i class="bg-white alert alert-danger fas fa-tint-slash"></i></h3>`
+      estado.innerHTML = `<h4 class="text-danger">apagado</h4>`
+    }
+  })
+</script>

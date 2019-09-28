@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container">
+      <a class="navbar-brand" href="/"><i class="display-4 bg-dark alert-success fab fa-envira"></i>OPTIMUM A.</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/"><i class=" display-4 fas fa-info"></i>Inicio </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/about"><i class="display-4 fas fa-home"></i>Acerca De...</a>
+      </li>
+      
+    </div>
+    
+          </ul>  
+          {{#if user}}
+   <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="display-4 fas fa-cogs"></i>
+    OPCIONES...    </a>
+        <div class="dropdown-menu mx-auto" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item mx-auto " href="/notes">Todas las Notas de Riego <i class=" display-4 fas fa-book"></i></a>
+          <a class="dropdown-item mx-auto " href="/notes/add">Agregar Nota-Riego  <i class="display-4 alert-secondary fas fa-sticky-note "></i></a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item " href="/senso">Monitorizar Sensores <i class="display-4 fas fa-desktop"></i></a>
+          <a class="dropdown-item " href="/active">Control - Manual      <i class="display-4 fab fa-deskpro"></i></a>
+          
+          <a class="dropdown-item" href="/users/logout"><i class="fas fa-sign-out-alt"></i> Salir</a>
+        </div>
+      </li>
+       
+          {{else}}
+      <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                  
+        <a class="nav-link" href="/users/signin"><i class="display-4 fas fa-sign-in-alt"></i>Ingresar </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/users/signup"> <i class="display-4 bg-dark far fa-registered"></i>Registrarse </a>
+      </li>
+ 
+   
+          {{/if}}
+       </ul>
+  </div>
+</div>
+</nav>
+    

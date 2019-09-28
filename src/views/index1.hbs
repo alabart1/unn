@@ -1,0 +1,44 @@
+ <nav class="navbar navbar-dark bg-dark ">
+  <form class="form-inline">
+    <a href="/senso" class="btn btn-outline-success" type="button">Monitorizar Sensores</a>
+    <a href="/active" class="btn btn-outline-success" type="button"> Control Manual</a>
+            <a href="/notes" class="btn btn-outline-success" type="button"> HORARIOs DE RIEGO</a>
+  </form>
+    <i class="display-4  alert-success bg-dark fab fa-node"></i></nav>
+
+<!--
+<div class="card" style="width: 20rem;">
+  <h3 id="temperatura" class="display-1 p-4"></h3>
+  <div class="card-body">
+    <h3 class="card-title">SENSOR DE TEMPERATURA</h3>
+    <p class="card-text">Para ver la grafica del sensor pulse el boton.</p>
+    <a href="#" class="btn btn-primary">Ver Grafica</a>
+  </div>
+</div>-->
+<hr>
+<div class="card "style="width:30rem;">
+  <h5 class="card-header">Monitorizando Temperatura en Tiempo Real </h5>
+  <div class="card-body">
+    <h5 class="card-title display-2  p-4"id="temperatura"></h5>
+    <p class="card-text">Para ver la grafica de la temperatura Click en el Boton.</p>
+    <a href="/grafica" class="btn btn-outline-success"type="button">Ver Grafica</a>
+  </div>
+</div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script >
+const socket= io()
+socket.on('temp',function(datotemp){
+    let temp=document.getElementById("temperatura")
+      //temp.innerHTML=`${data}°C`
+if(datotemp>22){
+    temp.innerHTML=`${datotemp} <i class=" bg-white alert alert-danger fas fa-temperature-high"></i>` 
+}
+if(datotemp>17){
+    temp.innerHTML=`${datotemp} <i class=" alert alert-warning fas fa-temperature-high"></i>` 
+}
+else{
+     temp.innerHTML=`${datotemp}<i class="alert alert-success fas fa-temperature-low"></i>`
+}
+})
+
+    </script>

@@ -1,0 +1,46 @@
+
+    
+     <nav class="navbar navbar-dark bg-dark ">
+  <form class="form-inline">
+    <a href="/senso" class="btn btn-outline-success" type="button">Monitorizar Sensores</a>
+    <a href="/active" class="btn btn-outline-success" type="button"> Control Manual</a>
+        <a href="/notes" class="btn btn-outline-success" type="button"> HORARIOs DE RIEGO</a>
+  </form>
+    <i class="display-4  alert-success bg-dark fab fa-node"></i></nav>
+  <div class="container "style="width: 50rem;">
+    <canvas id="myChart"></canvas>
+  </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      const socket = io()
+
+      var ctx = document.getElementById('myChart').getContext('2d')
+      var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: 'line',
+
+          // The data for our dataset
+          data: {
+              labels: ["temp"],
+              datasets: [{
+                  label: "Temperatura Actual",
+                  backgroundColor: 'rgb(87,411,155,12)',
+                  borderColor: 'rgb(90,222,14,9)',
+                  data: [],
+              }]
+},
+          options: {}
+      })
+
+    let counter = 2
+      socket.on('temp', function (data) {
+        chart.data.labels.push(counter)
+        chart.data.datasets.forEach(dataset => {
+          dataset.data.push(data)
+        })
+       counter++
+        chart.update()
+      })
+    </script>

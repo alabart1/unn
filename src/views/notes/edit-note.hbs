@@ -1,0 +1,33 @@
+<div class="cold-md-4 mx-auto">
+<div class="card "style="width: 20rem;">
+    <div class="card-header">
+        <h3>Editar Nota</h3>
+    </div>
+    <div class="card-body">
+<form action="/notes/edit-note/{{note._id}}?_method=PUT"method="POST">
+<input type="hidden"name="_method" value="PUT">
+<div class="form-group">
+<input type="text" class="form-control"name="title"placeholder="ingrese titulo"
+value="{{note.title}}">
+</div>
+<div class="form-group">
+    <textarea name="description"  class="form-control">
+        {{note.description}}
+    </textarea>
+</div>
+<div class="form-group">horario:<input type="number" min="0"max="24" name="hora"placeholder="" value="{{note.hora}}"> : <input type="number"min="0"max="59" name="minuto"value="{{note.minuto}}"> <i class="far fa-clock"></i></div>
+      
+<div class="form-group mx-auto">
+        Duracion:
+    <input name="duracion" class="mx-auto" type="number"min="00"max="60"placeholder="en Minutos" value="{{note.duracion}}"></input>  <i class="fas fa-hourglass-half"></i> </div>
+<div class="form-group">
+    <button class="btn btn-primary btn-block"type="submit">
+       Guardar
+    </button>
+</div>
+
+</form>
+    </div>
+</div>
+
+</div>
