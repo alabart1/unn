@@ -74,9 +74,12 @@ parser.on('open',function(){
 })
 var datotemp
 parser.on('data',function(data){
-  datotemp=data
+  //
   //let temp=parseFloat(data)+'°C'
-  //console.log(temp)
+
+  var datotemp1=data.split(" " )
+  datotemp=datotemp1[0]
+console.log(datotemp1[1])
   //io.emit('temp',data)
 })
 port.on('error',function(err){
