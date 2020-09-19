@@ -28,17 +28,18 @@
                   label: "Temperatura Actual",
                   backgroundColor: 'rgb(87,411,155,12)',
                   borderColor: 'rgb(90,222,14,9)',
-                  data: [],
+                  data: []
               }]
 },
           options: {}
       })
 
     let counter = 2
-      socket.on('temp', function (data) {
+      socket.on('temp', function (data1) {
+        var  dato=data1.split(" ")
         chart.data.labels.push(counter)
         chart.data.datasets.forEach(dataset => {
-          dataset.data.push(data)
+          dataset.data.push(dato[0])
         })
        counter++
         chart.update()

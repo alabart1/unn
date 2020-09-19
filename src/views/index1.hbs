@@ -1,13 +1,14 @@
- <nav class="navbar navbar-dark bg-dark ">
+<nav class="navbar navbar-dark bg-dark ">
   <form class="form-inline">
     <a href="/senso" class="btn btn-outline-success" type="button">Monitorizar Sensores</a>
     <a href="/active" class="btn btn-outline-success" type="button"> Control Manual</a>
-            <a href="/notes" class="btn btn-outline-success" type="button"> HORARIOs DE RIEGO</a>
+    <a href="/notes" class="btn btn-outline-success" type="button"> HORARIOs DE RIEGO</a>
   </form>
-    <i class="display-4  alert-success bg-dark fab fa-node"></i></nav>
+  <i class="display-4  alert-success bg-dark fab fa-node"></i>
+</nav>
 
 <!--
-<div class="card" style="width: 20rem;">
+<div class="card" style="width: 30rem;">
   <h3 id="temperatura" class="display-1 p-4"></h3>
   <div class="card-body">
     <h3 class="card-title">SENSOR DE TEMPERATURA</h3>
@@ -15,30 +16,102 @@
     <a href="#" class="btn btn-primary">Ver Grafica</a>
   </div>
 </div>-->
-<hr>
-<div class="card "style="width:30rem;">
-  <h5 class="card-header">Monitorizando Temperatura en Tiempo Real </h5>
-  <div class="card-body">
-    <h5 class="card-title display-2  p-4"id="temperatura"></h5>
-    <p class="card-text">Para ver la grafica de la temperatura Click en el Boton.</p>
-    <a href="/grafica" class="btn btn-outline-success"type="button">Ver Grafica</a>
-  </div>
-</div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script >
-const socket= io()
-socket.on('temp',function(datotemp){
-    let temp=document.getElementById("temperatura")
-      //temp.innerHTML=`${data}°C`
-if(datotemp>22){
-    temp.innerHTML=`${datotemp} <i class=" bg-white alert alert-danger fas fa-temperature-high"></i>` 
-}
-if(datotemp>17){
-    temp.innerHTML=`${datotemp} <i class=" alert alert-warning fas fa-temperature-high"></i>` 
-}
-else{
-     temp.innerHTML=`${datotemp}<i class="alert alert-success fas fa-temperature-low"></i>`
-}
-})
+<table class="container row p-4">
+  <td>
+    <div class="card" style="width:24rem;">
+      <h5 class="card-header">Temperatura DTH-11 </h5>
+      <div class="card-body">
+        <h5 class="card-title display-2" id="temp11"></h5>
+        {{!-- <a href="#" class="btn btn-outline-success" type="button">Ver Grafica</a> --}}
+      </div>
+    </div>
+  </td>
+   <td>
+      <div class="card" style="width:24rem;">
+        <h5 class="card-header">Humedad Relativa Ambiente </h5>
+        <div class="card-body">
+          <h5 class="card-title display-2" id="humedad"></h5>
+        </div>
+      </div>
+    </td>
+  <td>
+    <div class="card" style="width:24rem;">
+      <h5 class="card-header">Temperatura de DS18B20</h5>
+      <div class="card-body">
+        <h5 class="card-title display-2" id="temperatura"></h5>
+        <a href="/grafica" class="btn btn-outline-success" type="button">Ver Grafica</a>
+      </div>
+    </div>
+  </td>
+  
+  <tr>
+    <td>
+   
+  </td>
+  </tr>
 
-    </script>
+</table> <div class="card" style="width:26rem;">
+      <h3 class="card-header">Nivel De Liquido Tanque</h3>
+      <div class="card-body">
+        <h5 class="card-title display-2" id="nivel"></h5>
+        {{!-- <a href="/#" class="btn btn-outline-success" type="button">Ver Grafica</a> --}}
+      </div>
+    </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io()
+  //0-->ds,1-->ult,2-->temp11,3-->hum
+  socket.on('temp', function (data1) {
+    var datos = data1.split(" ")
+    var tempdata = datos[0]
+    var nivel = datos[1]
+    var tempe11 = datos[2]
+    var hum = datos[3]
+    //  setInterval(()=>{
+    //  console.log(`${tempdata}-${nivel}-${temp11}-${hum}`)
+    //},1000)
+    let temp = document.getElementById("temperatura")
+    if (tempdata > 22) {
+      temp.innerHTML = `${tempdata} <i class=" bg-white alert alert-danger fas fa-temperature-high"></i>`
+    }
+    if (tempdata > 17) {
+      temp.innerHTML = `${tempdata} <i class=" alert alert-warning fas fa-temperature-high"></i>`
+    }
+    else {
+      temp.innerHTML = `${tempdata}<i class="alert alert-success fas fa-temperature-low"></i>`
+    }
+    //nivel
+    let Nivel = document.getElementById("nivel")
+    if (nivel > 100) {
+      Nivel.innerHTML = `${nivel}<i class=" bg-white alert alert-danger fas fa-percent"></i>Alto`
+    }
+    if (nivel == 50 ) {
+      Nivel.innerHTML = `${nivel}<i class=" alert alert-secondary fas fa-percent"></i>Medio` 
+    }
+    else {if(nivel <15)
+      Nivel.innerHTML = `${nivel}<i class="alert alert-success fas fa-percent"></i>Bajo`
+    }//temp dth11
+    let temp11 = document.getElementById("temp11")
+    if (tempe11 > 23) {
+      temp11.innerHTML = `${tempe11} <i class=" bg-white alert alert-danger fas fa-temperature-high"></i>`
+    }
+    if (tempe11 > 15) {
+      temp11.innerHTML = `${tempe11} <i class=" alert alert-warning fas fa-temperature-high"></i>`
+    }
+    else {
+      temp11.innerHTML = `${tempe11}<i class="alert alert-success fas fa-temperature-low"></i>`
+    }
+    //humedad
+    let humed = document.getElementById("humedad")
+    if (hum > 95) {
+      humed.innerHTML = `${hum} alto<i class=" bg-white alert alert-secondary fas fa-percentage"></i>`
+    }
+    if (humed > 15) {
+      temp11.innerHTML = `${hum} bajo<i class=" alert alert-danger fas fa-percentage"></i>`
+    }
+    else {
+      humed.innerHTML = `${hum}<i class="alert alert-success fas fa-percentage"></i>`
+    }
+  })
+</script>

@@ -15,7 +15,7 @@ Un boton: <input type="button" name="Boton3" value="3" OnClick="Mostrar(this);">
 </nav>
 <br>
 <div class="card " style="width: 37rem;">
-  <h5 class="card-header">BOMBA 1</h5>
+  <h5 class="card-header text-center text-success">BOMBA 1</h5>
   <div class="card-body">
     <table border="0" withd="10%" cellspacing="0" cellpadding="0">
       <tr>
@@ -42,6 +42,29 @@ Un boton: <input type="button" name="Boton3" value="3" OnClick="Mostrar(this);">
     </table>
   </div>
 </div>
+{{!-- ventilador --}}
+<div class="card " style="width: 37rem;">
+  <h5 class="card-header text-center text-success">TANQUE 1</h5>
+  <div class="card-body">
+    <table border="0" withd="10%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="3" style="width: 16rem;">
+          <p class="card-text btn btn-outline-dark" id="BTventilador"><i
+              class="alert-primary mx-auto display-4 fab fa-jedi-order"></i>Ventilador <i
+              class=" display-4 fas fa-angle-double-right"></i> </p>
+        </td>
+        <td class="mx-auto" style="width: 9rem;">
+          <h3 class="">ESTADO</h3>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="row"><a id="estadon">--</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
 </div>
 
 
@@ -58,8 +81,8 @@ Un boton: <input type="button" name="Boton3" value="3" OnClick="Mostrar(this);">
   var estado = 0;
   window.onload = function () {
     document.getElementById("BTmotor").onclick = function motorActAp() {
-//      estado++;
-estado+=1;
+      //      estado++;
+      estado -= -1;
       socket.emit('motor', estado)
       let estadom = document.getElementById("BTmotor");
       if (estado % 2) {
@@ -69,11 +92,27 @@ estado+=1;
           `<i class="  display-4 alert alert-danger fas fa-power-off mx-auto"></i>`;
       }
     }
+    var estadovt=0
+    document.getElementById("BTventilador").onclick = function ventiladorActAp() {
+      estadovt -= -1;
+      socket.emit('ventilador', estadovt)
+      let estadov = document.getElementById("BTventilador");
+      if (estadovt % 2) {
+        estadov.innerHTML = `<i class=" display-4  mx-auto text-success alert alert-success fas fa-power-off"></i>`;
+           document.getElementById("estadon").innerHTML=`<h3 class="text-success">Aspersor Encendido</h3>`
+    
+      } else {
+        estadov.innerHTML =
+          `<i class="  display-4 alert alert-danger fas fa-power-off mx-auto"></i>`;
+          document.getElementById("estadon").innerHTML=`<h3 class="text-danger">Aspersor Apagado</h3>`
+      }
+    }
   }
   document.getElementById('BTmotor').onclick = motorActAp;
+  document.getElementById('BTventilador').onclick = ventiladorActAp;
 </script>
 <script src="/socket.io/socket.io.js"></script>
-<script >
+<script>
 
   var socket1 = io();
   socket1.on('fluj', function (datoflu) {
@@ -81,11 +120,11 @@ estado+=1;
     let estado = document.getElementById("estado");
     //temp.innerHTML=`${data}°C`
     if (datoflu == 1) {
-      flujo1.innerHTML = `<h3>Hay Flujo<i class=" bg-white alert alert-primary  fas fa-tint"></i></h3>`;
+      flujo1.innerHTML = `<h4>Hay Flujo<i class=" bg-white alert alert-primary  fas fa-tint"></i></h4>`;
       estado.innerHTML = `<h4 class="text-success">encendido</h4>`;
     }
     if (datoflu == 0) {
-      flujo1.innerHTML = `<h3>No hay Flujo<i class="bg-white alert alert-danger fas fa-tint-slash"></i></h3>`
+      flujo1.innerHTML = `<h4>No hay Flujo<i class="bg-white alert alert-danger fas fa-tint-slash"></i></h4>`
       estado.innerHTML = `<h4 class="text-danger">apagado</h4>`
     }
   })
