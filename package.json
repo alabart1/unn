@@ -4,6 +4,7 @@
   "description": "proyecto SisInv para la materia de TMG-600",
   "main": "index.js",
   "scripts": {
+    "start":"node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "author": "alvar",
