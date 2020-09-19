@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 
-mongoose.connect('mongodb://mongodb+srv://admin:admin@cluster0.gc3l7.mongodb.net/test',
+mongoose.connect('mongodb://mongodb+srv://admin:admin@sistinv.a9tvo.mongodb.net/sistinv?retryWrites=true&w=majority',
 {
     useCreateIndex:true,
     useNewUrlParser:true,
